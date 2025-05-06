@@ -1,80 +1,56 @@
 # React Project Setup and Deployment Guide for Windows
 
-This guide provides step-by-step instructions for setting up a React project locally on a Windows system.
+This guide provides step-by-step instructions for setting up a React project.
 
-## 1. Setting Up the React Project Locally
+## 1. Setting Up the React Project
 
 ### Install Node.js and npm
 
-1. Download the latest version of [Node.js](https://nodejs.org/) for Windows. The installer includes both `node` and `npm`.
-2. Run the installer and follow the instructions.
+```shell
+apt update && apt install nodejs npm -y
+```
 
 ### Verify Installation
 
-After installation, open **Command Prompt** and verify that Node.js and npm are installed correctly by running:
 
-```bash
+```shell
 node -v
 npm -v
 ```
 
-## 2. Create a React Application
 
-Use npx (which is bundled with npm) to create a new React app:
-
-```bash
-
-npx create-react-app react-frontend
-```
-
-This will create a new directory called react-frontend and set up a new React project in it.
-
-Navigate to the Project Directory
-
-After the project is created, navigate to the project directory:
-
-```bash
-cd react-frontend
-```
-
-## 3. Run the React Application Locally
-
-Install Dependencies
+## 2. Install Dependencies
 
 To install the necessary dependencies for your project, run the following command:
 
-```bash
-
+```shell
 npm install
-npm install web-vitals
 ```
 
-Start the Development Server
+## 3. Build the React Application for Production
 
-To start the development server and run the React application locally, use:
+Update backend URL in .env file
 
-```bash
+```shell
+vim .env 
 
-npm start
+    VITE_API_URL = "http://<BACKEND_PUBLIC_IP>:8080/api"
 ```
-
-This will start the application on http://localhost:3000, and you can view it in your browser.
-
-## 4. Install Axios for Frontend to Backend Connection
-
-To install Axios for connecting the frontend to the backend, run:
-
-```bash
-
-npm i axios
-```
-
-## 5. Build the React Application for Production
 
 To build the React application for production, run:
 
-```bash
+```shell
 npm run build
 ```
 
-This will create a build/ directory in your project containing optimized, production-ready files.
+This will create a dist/ directory in your project containing optimized, production-ready files.
+
+## 4. Deploy production-ready files on s3 or apache2 server
+
+```shell
+apt install apache2 -y
+systemctl start apache2
+cp -rf dist/* /var/www/html/
+```
+
+You can access the application on http://localhost:80
