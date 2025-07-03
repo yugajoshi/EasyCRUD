@@ -1,6 +1,6 @@
 import axios from "axios";
 
-const BASE_URL = import.meta.env.VITE_API_URL;
+const BASE_URL = window.APP_CONFIG?.API_URL || "http://localhost:8080";
 
 export const fetchUsers = async () => {
   try {
