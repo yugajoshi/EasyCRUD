@@ -1,0 +1,21 @@
+apiVersion: apps/v1
+kind: DaemonSet
+metadata:
+  name: my-daemon-new
+  labels: 
+    app: my-dm-app-new
+spec: 
+  template:
+    metadata:
+      name: my-dm-template-new
+      labels: 
+        app: my-dm-app-new
+    spec:
+      containers:
+        - name: my-container
+          image: httpd:latest
+          ports: 
+            - containerPort: 80
+  selector:
+    matchLabels:
+      app: my-dm-app-new

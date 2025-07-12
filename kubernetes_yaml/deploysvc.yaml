@@ -1,0 +1,15 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: mydeploysvc
+  labels: 
+    app: myapp
+spec:
+  type: LoadBalancer 
+  selector:
+    app: myapp
+  ports:
+  - port: 80
+    targetPort: 80
+    protocol: TCP
+    name: http

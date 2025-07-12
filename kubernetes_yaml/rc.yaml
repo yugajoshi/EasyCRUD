@@ -1,0 +1,19 @@
+apiVersion: v1
+kind: ReplicationController
+metadata:
+  name: myapp-httpd
+spec:
+  replicas: 3
+  selector:
+    app: myapp-httpd
+  template:
+    metadata:
+      name: myapp-httpd
+      labels:
+        app: myapp-httpd
+    spec:
+      containers:
+        - name: myapp-httpd
+          image: httpd
+          ports:
+            - containerPort: 80

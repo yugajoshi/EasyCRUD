@@ -1,0 +1,25 @@
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: mystatefulset
+  labels: 
+    app: my-app
+spec:
+  replicas: 3
+  selector: 
+    matchLabels:
+      app: my-app
+  template:
+    metadata:
+      name: my-app
+      labels:
+        app: my-app
+    spec:
+      containers:
+      - name: mycontainer
+        image: mysql:latest
+        ports:
+        - containerPort: 3306
+        env:
+          - name: MYSQL_ROOT_PASSWORD
+            value: "redhat"

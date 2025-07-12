@@ -1,0 +1,14 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: nginx
+  labels:
+    app: nginx
+spec:
+  containers:
+  - name: nginx
+    image: nginx:latest
+    ports:
+      - containerPort: 80
+  
+  nodeName: "ip-172-31-0-106.ap-south-1.compute.internal"
