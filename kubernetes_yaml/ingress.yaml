@@ -1,0 +1,53 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: my-ing
+  annotations:
+    nginx.ingress.kubernetes.io/rewrite-target: /
+
+spec:
+  ingressClassName: nginx
+  rules:
+  ## PATH BASED ROUTING
+  - host: af2715bbfcb6d470b8d979245a5f5ef8-1622082182.ap-south-1.elb.amazonaws.com 
+    http:
+      paths:
+        - path: /cloth
+          pathType: Prefix
+          backend:
+            service:
+              name: cloth-app-service
+              port: 
+                number: 80
+        - path: /mobile
+          pathType: Prefix
+          backend: 
+            service:
+              name: mobile-app-service
+              port:
+                number: 80
+
+  ## NAMEBASED ROUTING
+    # - host: cloth.cloudblitz.in
+    #   http:
+    #     paths:
+    #       - path: /
+    #         pathType: Prefix
+    #         backend:
+    #           service:
+    #             name: cloth-app-service
+    #             port:
+    #               number: 80
+    # - host: mobile.cloudblitz.in
+    #   http:
+    #     paths:  
+    #       path: /
+    #       pathType: Prefix
+    #       backend:  
+    #         service:
+    #           name: mobile-app-service
+    #           port:
+    #             number: 80
+         
+
+
