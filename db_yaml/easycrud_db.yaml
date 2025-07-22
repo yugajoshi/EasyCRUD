@@ -1,0 +1,41 @@
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: mystatefulset
+  labels: 
+    app: my-student-app
+spec:
+  replicas: 2
+  selector: 
+    matchLabels:
+      app: my-app
+  serviceName: mariadb
+  template:
+    metadata:
+      name: my-app
+      labels:
+        app: my-app
+    spec:
+      containers:
+      - name: my-db-container
+        image: mariadb:latest
+        ports:
+        - containerPort: 3306
+        env:
+          - name: MYSQL_ROOT_PASSWORD
+            valueFrom:
+              secretKeyRef: 
+                name: my-secret
+                key: password 
+          - name: MYSQL_DATABASE
+            valueFrom:
+              secretKeyRef:
+                name: my-secret
+                key: db_name
+        volumeMounts: 
+          - name: student-db-volume
+            mountPath: /var/lib/mysql
+      volumes:
+        - name: student-db-volume
+          persistentVolumeClaim:
+            claimName: student-db-pvc

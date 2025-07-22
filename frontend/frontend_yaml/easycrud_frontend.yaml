@@ -1,0 +1,35 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: frontend
+  labels:
+    app: my-student-app
+spec:
+  selector:
+    matchLabels:
+      app: frontend
+  template:
+    metadata:
+      labels:
+        app: frontend
+    spec:
+      containers:
+        - name: frontend
+          image: yugajoshi/student-frontend:latest
+          ports:
+            - containerPort: 80
+          volumeMounts:
+            - name: config-volume
+              mountPath: /var/www/localhost/htdocs/config.js
+              subPath: config.js
+          resources: 
+            requests:
+              cpu: 200m
+              memory: 100M
+            limits:
+              cpu: 500m
+              memory: 200M
+      volumes:
+        - name: config-volume
+          configMap:
+            name: frontend-config
